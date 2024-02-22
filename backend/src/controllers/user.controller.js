@@ -90,8 +90,4 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged out"));
 });
 
-const getRegisterUser = asyncHandler(async (req, res) => {
-  res.render("register");
-});
-
-export { registerUser, loginUser, getRegisterUser, logoutUser };
+export { registerUser, loginUser, logoutUser };

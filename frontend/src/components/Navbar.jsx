@@ -1,10 +1,19 @@
 // Navbar.js
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = Cookies.get("accessToken");
+    setIsLoggedIn(accessToken ? true : false);
+  });
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,6 +21,17 @@ const Navbar = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/v1/users/logout");
+      setIsLoggedIn(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isCurrentPage = (path) => location.pathname === path;
@@ -64,24 +84,38 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <Link
-            to="/login"
-            className={`text-white hover:text-gray-300 ml-4 ${
-              isCurrentPage("/login") ? "underline" : ""
-            }`}
-            onClick={closeMenu}
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className={`text-white hover:text-gray-300 ml-4 ${
-              isCurrentPage("/register") ? "underline" : ""
-            }`}
-            onClick={closeMenu}
-          >
-            Register
-          </Link>
+
+          {/* Conditional rendering based on isLoggedIn state */}
+          {isLoggedIn ? (
+            <Link
+              to="/logout"
+              className={`text-white hover:text-gray-300 ml-4`}
+              onClick={handleLogout}
+            >
+              Logout
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className={`text-white hover:text-gray-300 ml-4 ${
+                  isCurrentPage("/login") ? "underline" : ""
+                }`}
+                onClick={closeMenu}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className={`text-white hover:text-gray-300 ml-4 ${
+                  isCurrentPage("/register") ? "underline" : ""
+                }`}
+                onClick={closeMenu}
+              >
+                Register
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>

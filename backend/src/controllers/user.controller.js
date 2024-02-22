@@ -87,7 +87,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     .status(200)
     .clearCookie("accessToken")
     .clearCookie("refreshToken")
-    .json(new ApiError(200, {}, "User logged out"));
+    .json(new ApiResponse(200, {}, "User logged out"));
 });
 
 const getRegisterUser = asyncHandler(async (req, res) => {

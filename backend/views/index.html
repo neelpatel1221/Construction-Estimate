@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Construction Estimation</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>Construction<br>Estimation</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a> 
+    <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
+    <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>  
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Construction</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="showcase">
+    <h1 class="w3-jumbo"><b>Estimate your stuff now!!</b></h1>
+    <h1 class="w3-xxxlarge w3-text-red"><b>Showcase.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+  </div>
+  
+
+  <div class="portlet light">
+<div class="portlet-title">
+<h2 class="caption H2_MarginTB5" title="Construction Cost Calculator | House Construction Cost Calculator">
+<img id="ctl00_cphPageContent_imgCostEstimator" src="../images/icons/Icon_CostEstimator.png" style="width:25px;border-width:0px;">
+<span class="caption-subject bold uppercase">Construction Cost Estimator</span>
+</h2>
+</div>
+<div class="portlet-body form">
+<div class="row">
+<div class="col-md-12">
+<div id="ctl00_cphPageContent_vsCostEstimatorCalculation" style="color:Red;display:none;">
+</div>
+</div>
+</div>
+<div role="form" class="form-horizontal">
+<div class="form-body">
+<div class="form-group">
+<label class="col-md-6 control-label">
+Builtup Area
+</label>
+<div class="col-md-6">
+<div class="input-group">
+<input name="ctl00$cphPageContent$txtBuiltup" type="number"  maxlength="7" id="firstNumber" title="Enter builtup square feet" class="form-control" onkeypress="return IsDecimal2DigitPositive(this, event)">
+<span class="input-group-addon bold">ft <sup>2</sup></span>
+<span id="ctl00_cphPageContent_rfvBuiltup" style="color:Red;display:none;"></span>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label class="col-md-6 control-label">
+Approx Cost (Per Square Feet)
+</label>
+<div class="col-md-6">
+<div class="input-group">
+<input name="ctl00$cphPageContent$txtApproxCost" type="number"  maxlength="7" id="secondNumber" title="Enter approx cost per square feet" class="form-control" onkeypress="return IsDecimal2DigitPositive(this, event)">
+<span class="input-group-addon bold">Rs.</span>
+<span id="ctl00_cphPageContent_rfvApproxCost" style="color:Red;display:none;"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- <div class="form-actions text-right">
+<input type="submit" name="ctl00$cphPageContent$btnCalculate" value="Calculate" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$cphPageContent$btnCalculate&quot; , &quot;&quot;, true, &quot;CostEstimatorCalculation&quot;, &quot; &quot;, false, false))" id="ctl00_cphPageContent_btnCalculate" title="Calculate Cost" class="btn blue">
+<input type="submit" name="ctl00$cphPageContent$btnReset" value="Reset" id="ctl00_cphPageContent_btnReset" title="Reset" class="btn red">
+</div> -->
+
+<!-- Calculation part -->
+
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Construction  Cost</div>
+<div class="card-body">
+<h5 class="card-title">Total Construction Cost :</h5>
+<p class="card-text"> <span id="result"></span> Rs</p>
+<br><br><br><br><br>
+<small class="text- success"><Note:>Note: It is estimated</Note:></small>
+</div>
+</div>
+</div>
+
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Cement Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Cement Required :</h5>
+ 
+
+<p class="card-text"> <span id="result1"></span> Bags</p>
+<h5 class="">Cost of Cement Required :</h5>
+<p class="card-text"> <span id="resultA"></span> Rs</p>
+<small class="text-
+success"><Note:>Note:Amount of cement required per 1ftsq=0.4 bags & 16.4%</Note:></small>
+</div>
+</div>
+
+</div>
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Sand Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Sand Required :</h5>
+<p class="card-text"> <span id="result2"></span> Ton</p>
+<h5 class="">Cost of Sand Required :</h5>
+ 
+
+<p class="card-text"> <span id="resultB"></span> Rs</p>
+<br>
+<small class="text-
+success"><Note:>Note:Amount of sand required per 1ftsq=0.816 ton & 12.3%</Note:></small>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Aggregrate  Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Aggregrate Required :</h5>
+<p class="card-text"> <span id="result3"></span> Ton</p>
+<h5 class="">Cost of Aggregrate Required :</h5>
+<p class="card-text"> <span id="resultC"></span> Rs</p>
+<small class="text-
+success"><Note:>Note:Amount of Aggregate required per 1ftsq=0.608 ton & 7.4%</Note:></small>
+</div>
+</div>
+</div>
+
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Steel Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Steel Required :</h5>
+<p class="card-text"> <span id="result4"></span> Ton</p>
+<h5 class="">Cost of Steel Required :</h5>
+<p class="card-text"> <span id="resultD"></span> Rs</p>
+<br><br>
+<small class="text-
+success"><Note:>Note:Amount of Steel required per 1ftsq= 4ton & 24.6%</Note:></small>
+</div>
+ 
+
+</div>
+
+</div>
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Paint Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Paint Required :</h5>
+<p class="card-text"> <span id="result5"></span> Lt.</p>
+<br><br><br><br>
+<small class="text-
+success"><Note:>Note:Amount of Paint required per 1ftsq= 0.18 Lt. & 4.1%</Note:></small>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+ 
+
+<div class="card-header">Bricks Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Bricks Required :</h5>
+<p class="card-text"> <span id="result6"></span> Pcs.</p>
+<br><br><br><br><br><br><br>
+</div>
+</div>
+</div>
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Finishers  Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Finishers Required :</h5>
+<p class="card-text"> <span id="result7"></span> Rs</p>
+<br><br><br><br><br>
+<small class="text-
+success"><Note:>Note:Amount  of Paint(4.1%),  Tiles(8.0%),  Paint(4.4%)</Note:></small>
+</div>
+</div>
+
+</div>
+
+<div class="col">
+<div class="card mx-3 mb-3" style="max-width: 18rem;">
+<div class="card-header">Flooring & Fittings Required</div>
+<div class="card-body">
+<h5 class="card-title">Amount of Flooring Required :</h5>
+<p class="card-text"> <span id="result8"></span> Sq. Ft.</p>
+<h5 class="card-title">Amount of Fittings Required :</h5>
+<p class="card-text"> <span id="result9"></span> Lt.</p>
+<small class="text-
+success"><Note:>Note:Window(3.0 %), Plumbing(5.5 %), Doors(3.4 %), Electrical(6.8 %), Sanitary(4.1 %)</Note:></small>
+</div>
+</div>
+</div>
+</div>
+</div>
+ 
+
+</div>
+
+
+</div>
+</div>
+</div>
+
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <img src="public/1.jpg" style="width:100%" onclick="onClick(this)">
+      <img src="public/2.jpg" style="width:100%" onclick="onClick(this)">
+      <img src="public/3.jpg" style="width:100%" onclick="onClick(this)">
+    </div>
+
+    <div class="w3-half">
+      <img src="public/4.jpg" style="width:100%" onclick="onClick(this)">
+      <img src="public/5.jpg" style="width:100%" onclick="onClick(this)">
+      <img src="public/6.jpg" style="width:100%" onclick="onClick(this)">
+    </div>
+  </div>
+
+  <!-- Modal for full size images on click-->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="w3-container" id="services" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Services.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>The project construction estimator is made especially for builders and developers to estimate the raw material and  labour required to make  construction project \ (building, society, mall, etc ). The main  difficulty arises during construction 
+        is to decide the quantity of raw materials,labours and resources required in future.This website will help to estimate the stuff.
+     
+    </p>
+  </div>
+  
+  <!-- Designers -->
+  <div class="w3-container" id="designers" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Designers.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p>The best team in the world.</p>
+    <p><b>Our Project Designers.</b>:</p>
+  </div>
+
+  <!-- The Team -->
+  <div class="w3-row-padding w3-grayscale">
+    <div class="row">
+        <div class="col-lg-6">
+
+
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey">
+        <img src="/w3images/kevin.jpg" alt="KANTI" style="width:100%">
+        <div class="w3-container">
+          <h3>Kantilal Solanki</h3>
+        </div>
+      </div>
+    </div>
+        </div>
+        <div class="col-lg-6">
+
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey img-fluid img-thumbnail">
+        <img src="/public/kevin.jpg" alt="UMER" style="width:100%">
+        <div class="w3-container">
+          <h3>Kevin Dhole</h3>
+          <p>kevindhule@gmail.com</p>
+          <p>7069999806</p>
+          
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+
+  
+  
+  <!-- Contact -->
+  <div class="w3-container" id="contact" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Contact.</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <p><b><gmail:->gauravchaurasia619@gmail.com</gmail:-> </p</b> <br>  <contact:->+917045693816</contact:-></p>
+  </div>
+
+<!-- End page content -->
+</div>
+
+<!-- W3.CSS Container 
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>-->
+
+
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+</script>
+
+</body>
+</html>
+
+
+<script>
+// Script to open and close sidebarfunction 
+w3_open() 
+{ 
+    document.getElementById("mySidebar").style.display = "block"; 
+    document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() 
+{ 
+    document.getElementById("mySidebar").style.display = "none"; 
+    document.getElementById("myOverlay").style.display = "none";
+}
+// Modal Image Gallery 
+function onClick(element) 
+{ 
+    document.getElementById("img01").src = element.src; 
+    document.getElementById("modal01").style.display = "block";
+    var captionText = document.getElementById("caption"); 
+    captionText.innerHTML = element.alt;
+}
+function multiplyBy()
+{
+num1 = document.getElementById("firstNumber").value; 
+num2 = document.getElementById("secondNumber").value; 
+a=document.getElementById("result").innerHTML = num1 * num2;
+
+
+
+document.getElementById("result7").innerHTML
+	document.getElementById("result8").innerHTML
+document.getElementById("result9").innerHTML=(16.5/100) *a (22.8/100) *a;
+}			
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

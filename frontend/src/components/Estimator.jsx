@@ -60,12 +60,6 @@ const Estimator = () => {
 
       {/* {Input Seciton} */}
       <InputSection
-        carpetArea={carpetArea}
-        costPerCarpetArea={costPerCarpetArea}
-        handleCarpetAreaChange={(e) => setCarpetArea(e.target.value)}
-        handleCostPerCarpetAreaChange={(e) =>
-          setCostPerCarpetArea(e.target.value)
-        }
         handleFormSubmit={handleFormSubmit}
         handleInputChange={handleInputChange}
       />

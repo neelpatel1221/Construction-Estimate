@@ -2,14 +2,7 @@
 
 import React from "react";
 
-const InputSection = ({
-  carpetArea,
-  costPerCarpetArea,
-  handleCarpetAreaChange,
-  handleCostPerCarpetAreaChange,
-  handleFormSubmit,
-  handleInputChange,
-}) => {
+const InputSection = ({ handleFormSubmit, handleInputChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     handleFormSubmit();

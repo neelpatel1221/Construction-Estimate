@@ -7,6 +7,7 @@ import Estimator from "./components/Estimator";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import Account from "./components/Account";
 function App() {
   return (
     <div>
@@ -18,6 +19,10 @@ function App() {
           <Route
             path="/estimator"
             element={<PrivateRoute Component={Estimator}></PrivateRoute>}
+          />
+          <Route
+            path="/account"
+            element={<PrivateRoute Component={Account}></PrivateRoute>}
           />
           {/* <PrivateRoute path="/estimator" element={<Estimator />} /> */}
           <Route path="/register" element={<Register />} />

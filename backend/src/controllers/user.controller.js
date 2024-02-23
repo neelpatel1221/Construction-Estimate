@@ -2,6 +2,9 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.models.js";
+import { Calculation } from "../models/calculation.models.js";
+import Excel from "exceljs";
+import generateExcelFile from "../utils/generateExcelFile.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -44,7 +47,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new ApiError(400, "User does not exists");
+    throw new ApiError(404, "User does not exists");
   }
 
   const isPasswordValid = await user.isPasswordCorrect(password);
@@ -90,4 +93,70 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged out"));
 });
 
-export { registerUser, loginUser, logoutUser };
+const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { user: req.user },
+        "current user fetched successfully"
+      )
+    );
+});
+
+const getCurrentUserCalculations = asyncHandler(async (req, res) => {
+  const userCalculations = await Calculation.find({ userId: req.user._id });
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { userCalculations },
+        "User calculation fetched successfuly"
+      )
+    );
+});
+
+const convertCalcualtionToExcel = asyncHandler(async (req, res) => {
+  try {
+    const calculationId = req.params.calculationId;
+    const calculationData = await Calculation.findById(calculationId);
+    if (!calculationData) {
+      throw new ApiError(401, "Invalid Id");
+    }
+
+    await generateExcelFile(calculationData, res);
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Excel File created successfully"));
+  } catch (error) {
+    console.error("Error generating Excel file:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+const deleteUserCalculation = asyncHandler(async (req, res) => {
+  const calculation = await Calculation.findByIdAndDelete(
+    req.params.calculationId
+  );
+
+  if (!calculation) {
+    throw new ApiError(401, "Invalid Id");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Calculation Deleted Successfully"));
+});
+
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getCurrentUser,
+  getCurrentUserCalculations,
+  convertCalcualtionToExcel,
+  deleteUserCalculation,
+};

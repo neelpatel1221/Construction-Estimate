@@ -1,8 +1,11 @@
-// Navbar.js
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// ... (imports)
 
 const Navbar = () => {
   const location = useLocation();
@@ -12,8 +15,9 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
-    setIsLoggedIn(accessToken ? true : false);
-  });
+    accessToken ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    // setIsLoggedIn(accessToken ? true : false);
+  }); // Fix: add dependency array to useEffect
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,6 +35,7 @@ const Navbar = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -64,7 +69,9 @@ const Navbar = () => {
           </button>
         </div>
         <nav
-          className={`lg:flex items-center ${isMenuOpen ? "block" : "hidden"}`}
+          className={`lg:flex items-center ${
+            isMenuOpen ? "flex" : "hidden"
+          } mt-4 lg:mt-0`}
         >
           <Link
             to="/estimator"
@@ -84,16 +91,23 @@ const Navbar = () => {
           >
             Home
           </Link>
-
-          {/* Conditional rendering based on isLoggedIn state */}
           {isLoggedIn ? (
-            <Link
-              to="/logout"
-              className={`text-white hover:text-gray-300 ml-4`}
-              onClick={handleLogout}
-            >
-              Logout
-            </Link>
+            <>
+              <Link
+                to="/account"
+                className={`text-white hover:text-gray-300 ml-4`}
+                onClick={closeMenu}
+              >
+                Account
+              </Link>
+              <Link
+                to="/logout"
+                className={`text-white hover:text-gray-300 ml-4`}
+                onClick={handleLogout}
+              >
+                Logout
+              </Link>
+            </>
           ) : (
             <>
               <Link
@@ -117,6 +131,7 @@ const Navbar = () => {
             </>
           )}
         </nav>
+        <ToastContainer />
       </div>
     </header>
   );

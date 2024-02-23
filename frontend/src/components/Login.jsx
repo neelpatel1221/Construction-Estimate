@@ -39,6 +39,8 @@ const Login = () => {
       // Handle API errors
       if (error.response && error.response.status === 401) {
         toast.error("Invalid credentials");
+      } else if (error.response && error.response.status === 404) {
+        toast.error("User Not Found");
       } else {
         toast.error("API request failed");
         console.error("API request failed", error.message);
@@ -66,6 +68,7 @@ const Login = () => {
             className="w-full px-3 py-2 border rounded-md"
             placeholder="Enter your email"
             onChange={handleInputChange}
+            required
           />
 
           <label
@@ -81,6 +84,7 @@ const Login = () => {
             className="w-full px-3 py-2 border rounded-md"
             placeholder="Enter your password"
             onChange={handleInputChange}
+            required
           />
 
           <button

@@ -8,6 +8,7 @@ import InputSection from "./InputSection.jsx";
 import TotalCostDisplay from "./TotalCostDisplay.jsx";
 import calculateMaterialData from "../utils/MaterialData.js";
 import axios from "axios";
+import Chart from "./Chart.jsx";
 
 const Estimator = () => {
   const [carpetArea, setCarpetArea] = useState("");
@@ -73,6 +74,9 @@ const Estimator = () => {
         materialQuantities={materialQuantities}
         materialPrices={materialPrices}
       />
+
+      {/* Chart Section */}
+      <Chart materialData={materialData} materialPrices={materialPrices} />
       <ToastContainer />
     </div>
   );

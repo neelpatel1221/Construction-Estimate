@@ -72,7 +72,6 @@ const Account = () => {
           (calculation) => calculation._id !== calculationId
         )
       );
-      console.log(response.data);
       if (response.data.success) {
         toast.success(response.data.message);
       }
@@ -90,7 +89,7 @@ const Account = () => {
       ) : userData ? (
         <div>
           <p>
-            <strong>Name:</strong> {userData.name}
+            <strong>Name:</strong> {userData.fullName}
           </p>
           <p>
             <strong>Email:</strong> {userData.email}

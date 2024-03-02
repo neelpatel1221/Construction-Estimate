@@ -76,7 +76,9 @@ const Estimator = () => {
       />
 
       {/* Chart Section */}
-      <Chart materialData={materialData} materialPrices={materialPrices} />
+      {materialPrices.length > 0 ? (
+        <Chart materialData={materialData} materialPrices={materialPrices} />
+      ) : null}
       <ToastContainer />
     </div>
   );

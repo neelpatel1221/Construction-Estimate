@@ -1,4 +1,3 @@
-import calculateMaterialData from "../../../frontend/src/utils/MaterialData.js";
 import { Calculation } from "../models/calculation.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";

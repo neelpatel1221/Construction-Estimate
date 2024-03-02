@@ -25,6 +25,5 @@ router
   .route("/delete/calculation/:calculationId")
   .post(verifyJWT, deleteUserCalculation);
 
-// secured Routes
 router.route("/calculate").post(verifyJWT, performCalculation);
 export default router;

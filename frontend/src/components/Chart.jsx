@@ -2,7 +2,6 @@ import React from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
 
 function Chart({ materialData, materialPrices }) {
-  console.log(materialPrices);
   const chartData = materialPrices.map((price, index) => {
     // Extracting only the desired part of the title
     const extractedTitle = materialData[index].title.replace(" Required", "");
